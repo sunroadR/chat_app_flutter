@@ -25,6 +25,7 @@ class MyApp extends StatelessWidget {
             return Text('Noe gikk galt');
           }
           if (snapshot.connectionState == ConnectionState.done) {
+
             return MultiBlocProvider(
                 providers:[
                   BlocProvider<LoginBloc>(
@@ -41,7 +42,7 @@ class MyApp extends StatelessWidget {
                     primarySwatch: Colors.lightGreen,
                   ),
 
-                  home: LoginSide(),
+                   home: LoginSide(),
                 )
             );
           }

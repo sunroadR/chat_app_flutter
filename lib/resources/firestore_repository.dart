@@ -124,4 +124,16 @@ class FirestoreProvider {
       var  userId = _auth.currentUser.uid.toString();
         return userId;
       }
+
+      bool finnesBrukerId(){
+      if(_auth.currentUser == null){
+        return false;
+      }
+      else
+        return true;
+
+
+      }
+
+
 }

@@ -13,36 +13,45 @@ class MessageBuble extends StatelessWidget {
       mainAxisAlignment: isMe ? MainAxisAlignment.end :
       MainAxisAlignment.start,
       children: [
-        Container(color: Colors.indigoAccent,),
-          Container(
-            decoration: BoxDecoration(
-              color: isMe ? Colors.lime[300] : Colors.orangeAccent[100],
-              borderRadius: BorderRadius.circular(12),
-            ),
-            width: 140,
-            height: 40,
-            padding: EdgeInsets.symmetric(
-              vertical: 10,
-              horizontal: 16
-            ),
-            margin: EdgeInsets.symmetric(
-              vertical: 4,
-              horizontal: 8,
-            ),
+          Flexible(
 
-            child: isMe ?
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Text(message),
-                ]
-              ) :
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Text(message)
-                ],
+            child: Container(
+
+
+              decoration: BoxDecoration(
+                color: isMe ? Colors.lime[300] : Colors.orangeAccent[100],
+
+                borderRadius: BorderRadius.circular(12),
               ),
+
+              padding: EdgeInsets.symmetric(
+                vertical: 10,
+                horizontal: 16
+
+              ),
+
+                margin: isMe? EdgeInsets.only(left: 60,top: 20,right: 10):
+                        EdgeInsets.only(right: 60,top: 10,left: 10),
+
+
+
+
+              child:  isMe ? Flexible(
+
+                   child: Expanded(child: Text(message)),
+
+                ):
+
+
+                Flexible(
+
+                  child:   Expanded(child: Text( message)),
+
+                ),
+
+
+
+            ),
           ),
         ],
       );

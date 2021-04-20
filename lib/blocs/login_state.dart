@@ -10,3 +10,6 @@ class BrukerNavnFinnesState extends LoginState{}
 
 class OpprettBrukerNavnState extends LoginState{}
 
+class BrukerHarBrukerId extends LoginState{}
+
+class BrukerErNy extends LoginState{}
