@@ -10,50 +10,47 @@ class MessageBuble extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: isMe ? MainAxisAlignment.end :
-      MainAxisAlignment.start,
-      children: [
-          Flexible(
+        mainAxisAlignment: isMe ? MainAxisAlignment.end :
+        MainAxisAlignment.start,
+        children: [
+            //Flexible(
+              Expanded(
+              child: Container(
+                decoration: BoxDecoration(
+                  color: isMe ? Colors.lime[300] : Colors.orangeAccent[100],
 
-            child: Container(
+                  borderRadius: BorderRadius.circular(12),
+                ),
 
-
-              decoration: BoxDecoration(
-                color: isMe ? Colors.lime[300] : Colors.orangeAccent[100],
-
-                borderRadius: BorderRadius.circular(12),
-              ),
-
-              padding: EdgeInsets.symmetric(
-                vertical: 10,
-                horizontal: 16
-
-              ),
-
-                margin: isMe? EdgeInsets.only(left: 60,top: 20,right: 10):
-                        EdgeInsets.only(right: 60,top: 10,left: 10),
-
-
-
-
-              child:  isMe ? Flexible(
-
-                   child: Expanded(child: Text(message)),
-
-                ):
-
-
-                Flexible(
-
-                  child:   Expanded(child: Text( message)),
+                padding: EdgeInsets.symmetric(
+                  vertical: 10,
+                  horizontal: 16
 
                 ),
 
+                  margin: isMe? EdgeInsets.only(left: 60,top: 20,right: 10):
+                          EdgeInsets.only(right: 60,top: 10,left: 10),
+                
+                child:  isMe ? Row(
+                  children: [
+                          Expanded(child: Text(message)),
+                  ],
+                ):
+                Row(
+                  children: [
+                    Expanded(child: Text( message)),
+                         ],
+                       ),
 
 
+
+
+
+
+              ),
             ),
-          ),
-        ],
-      );
+          ],
+
+    );
     }
 }

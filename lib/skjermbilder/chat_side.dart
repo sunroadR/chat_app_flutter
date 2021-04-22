@@ -46,17 +46,22 @@ class _ChatSideState extends State<ChatSide> {
                   );
                 }
                 if(state is SnakkeMedState){
-                  return  Column(
-                    children: [
-                      Meldinger(),
-                      Container(
-                        alignment: Alignment.bottomCenter,
-                        child: NyMelding(state.mottakersNavn)),
-                    ],
+                  return  SafeArea(
+                    child: Column(
+                      children: [
+
+                       Meldinger(),
+
+                        Container(
+                          alignment: Alignment.bottomCenter,
+                          child: NyMelding(state.mottakersNavn)),
+                      ],
+                    ),
                   );
                 }
                 if(state is MeldingSendtState){
-                  return Column(
+                  return SafeArea(
+                      child:Column(
                     children: [
                       Meldinger(),
                       Container(
@@ -64,7 +69,8 @@ class _ChatSideState extends State<ChatSide> {
                         child: NyMelding(state.mottakersNavn)
                       )
                     ],
-                  );
+                  )
+                );
                 }
               },
            )

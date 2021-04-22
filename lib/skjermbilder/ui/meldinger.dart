@@ -31,17 +31,20 @@ class Meldinger extends StatelessWidget {
                   }
                   final chatDocs = chatSnapshot.data.docs;
 
-                  return chatDocs.isNotEmpty? Flexible(
-                    child: ListView.builder(
-                      scrollDirection: Axis.vertical,
-                      reverse: true,
-                      itemCount: chatDocs.length,
-                      itemBuilder: (ctx, index) =>
-                        MessageBuble(
-                          chatDocs[index]['text'],
-                          chatDocs[index]['userId'] == _fireStoreProvider.hentUserId(),
-                        ),
-                    ),
+                  return chatDocs.isNotEmpty? Expanded(
+                      child: ListView.builder(
+                        scrollDirection: Axis.vertical,
+                        reverse: true,
+                        itemCount: chatDocs.length,
+                        itemBuilder: (ctx, index) =>
+                          Expanded(
+                            child: MessageBuble(
+                              chatDocs[index]['text'],
+                              chatDocs[index]['userId'] == _fireStoreProvider.hentUserId(),
+                            ),
+                          ),
+                      ),
+
                   ) :
                   Container();
                 });
