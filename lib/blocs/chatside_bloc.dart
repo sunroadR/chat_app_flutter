@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:chat_app_flutter/resources/firestore_repository.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:meta/meta.dart';
 
 part 'chatside_event.dart';
@@ -23,6 +24,9 @@ class ChatsideBloc extends Bloc<ChatsideEvent, ChatsideState> {
     if(event is SendMelding ){
       yield* sendNyMelding(event);
     }
+    if (event is KlikkerLikeKnapp){
+      yield* klikketLike(event);
+    }
   }
 
   Stream<ChatsideState> _FinnesBruker(FinnesBruker event) async* {
@@ -38,8 +42,20 @@ class ChatsideBloc extends Bloc<ChatsideEvent, ChatsideState> {
 
   Stream<ChatsideState> sendNyMelding(SendMelding event) async* {
     _firestoreProvider.sendMelding(event.motakersNavn,event.melding);
-
     yield MeldingSendtState(event.motakersNavn, event.melding);
+  }
+
+Stream<QuerySnapshot> henteMeldinger(String motakkersNavn) async*{
+    yield* _firestoreProvider.hentMeldinger(motakkersNavn);
+  }
+
+String hentUserId(){
+    return _firestoreProvider.hentUserId();
+}
+
+  Stream<ChatsideState> klikketLike(KlikkerLikeKnapp event) async*{
+    await _firestoreProvider.oppDaterLike(event.meldingNavn,event.sendersNavn);
+    yield HarKlikket(event.sendersNavn);
   }
 }
 

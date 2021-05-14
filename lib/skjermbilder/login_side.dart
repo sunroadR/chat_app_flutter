@@ -10,30 +10,31 @@ class LoginSide extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('ChatApp'),
+          title: const Text('ChatApp'),
         ),
         body: BlocListener<LoginBloc, LoginState>(listener: (context, state) {
           if (state is BrukerNavnFinnesState) {
             Scaffold.of(context).showSnackBar(SnackBar(
               backgroundColor: Colors.orangeAccent,
-              content: Text('Brukernavnet er allerde i bruk'),
+              content: const Text('Brukernavnet er allerde i bruk',
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 20
+              ),),
             ));
           }
-        }, child: BlocBuilder<LoginBloc, LoginState>(builder: (context, state) {
-          print('State er 1 ' + state.toString());
+        },
+            child: BlocBuilder<LoginBloc, LoginState>(builder: (context, state) {
           if (state is LoginStateInitial) {
             BlocProvider.of<LoginBloc>(context).add(StartOppApp());
 
-            print('State er Her inne  2' + state.toString());
           }
           if (state is BrukerHarBrukerId) {
-            print('Er jeg her ?? ');
             Future.delayed(Duration.zero, () {
               Navigator.of(context)
                   .push(MaterialPageRoute(builder: (context) => ChatSide()));
             });
           }
-          print('State er Her inne  2' + state.toString());
           if (state is BrukerErNy) {
             return LoginForm();
           }

@@ -33,15 +33,11 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   }
 
   Stream<LoginState> _startOppApp(StartOppApp event) async* {
-    print('Hei og hopp!!!');
     var finnesBrukerId = await _firestoreProvider.finnesBrukerId();
-    print(finnesBrukerId);
     if (finnesBrukerId == false) {
-
       yield BrukerErNy();
     }
     if (finnesBrukerId==true) {
-      print('Hei på deg !!');
       yield BrukerHarBrukerId();
     }
   }

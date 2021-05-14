@@ -8,75 +8,121 @@ import '../../blocs/chatside_bloc.dart';
 //Utskrift av meldinger mellom to brukere.
 class Meldinger extends StatelessWidget {
   @override
-  FirestoreProvider _fireStoreProvider = FirestoreProvider();
-
   Widget build(BuildContext context) {
+    final _chatBloc = BlocProvider.of<ChatsideBloc>(context);
+
     return BlocBuilder<ChatsideBloc, ChatsideState>(
         builder: (context, state) {
-          return FutureBuilder(builder: (ctx, futureSnapShot) {
+         return FutureBuilder(builder: (ctx, futureSnapShot) {
             if (futureSnapShot.connectionState == ConnectionState.waiting) {
               return Center(
                 child: CircularProgressIndicator(),
               );
             }
 
-            if(state is MeldingSendtState ) {
+            if(state is MeldingSendtState) {
               return StreamBuilder(
-                stream: _fireStoreProvider.hentMeldiner(state.mottakersNavn),
-                builder: (context, AsyncSnapshot<QuerySnapshot> chatSnapshot) {
-                  if (chatSnapshot.connectionState == ConnectionState.waiting) {
-                    return Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-                  final chatDocs = chatSnapshot.data.docs;
+                  stream: _chatBloc.henteMeldinger(state.mottakersNavn),
+                  builder: (context, AsyncSnapshot<QuerySnapshot> chatSnapshot) {
 
-                  return chatDocs.isNotEmpty? Expanded(
+                    if (chatSnapshot.connectionState == ConnectionState.waiting) {
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                    final chatDocs = chatSnapshot.data.docs;
+                    ;                  return chatDocs.isNotEmpty?Flexible(
                       child: ListView.builder(
                         scrollDirection: Axis.vertical,
                         reverse: true,
                         itemCount: chatDocs.length,
                         itemBuilder: (ctx, index) =>
-                          Expanded(
-                            child: MessageBuble(
+                            MessageBuble(
                               chatDocs[index]['text'],
-                              chatDocs[index]['userId'] == _fireStoreProvider.hentUserId(),
-                            ),
-                          ),
-                      ),
+                              chatDocs[index]['userId'] == _chatBloc.hentUserId(),
+                              chatDocs[index]['likt'],
+                              chatDocs[index]['navnMelding'],
+                              chatDocs[index]['brukeNavn'],
 
-                  ) :
-                  Container();
-                });
+                            ),
+                      ),
+                    ):
+                    Container();
+                  });
+
+
+
             }
 
             if(state is SnakkeMedState ) {
               return StreamBuilder(
-                stream: _fireStoreProvider.hentMeldiner(state.mottakersNavn),
+                stream: _chatBloc.henteMeldinger(state.mottakersNavn),
                 builder: (context, AsyncSnapshot<QuerySnapshot> chatSnapshot) {
+
                   if (chatSnapshot.connectionState == ConnectionState.waiting) {
                     return Center(
                       child: CircularProgressIndicator(),
                     );
                   }
                   final chatDocs = chatSnapshot.data.docs;
-
-                  return chatDocs.isNotEmpty? Flexible(
+;                  return chatDocs.isNotEmpty?Flexible(
                     child: ListView.builder(
-                      scrollDirection: Axis.vertical,
-                      reverse: true,
-                      itemCount: chatDocs.length,
-                      itemBuilder: (ctx, index) =>
-                        MessageBuble(
-                          chatDocs[index]['text'],
-                          chatDocs[index]['userId'] == _fireStoreProvider.hentUserId(),
-                        ),
-                    ),
-                  ) :
+                        scrollDirection: Axis.vertical,
+                        reverse: true,
+                        itemCount: chatDocs.length,
+                        itemBuilder: (ctx, index) =>
+                          MessageBuble(
+                            chatDocs[index]['text'],
+                            chatDocs[index]['userId'] == _chatBloc.hentUserId(),
+                            chatDocs[index]['likt'],
+                            chatDocs[index]['navnMelding'],
+                            chatDocs[index]['brukeNavn'],
+
+                          ),
+                      ),
+                  ):
                   Container();
                 });
             }
+            if(state is HarKlikket ) {
+              return StreamBuilder(
+                  stream: _chatBloc.henteMeldinger(state.mottakersNavn),
+                  builder: (context, AsyncSnapshot<QuerySnapshot> chatSnapshot) {
+
+                    if (chatSnapshot.connectionState == ConnectionState.waiting) {
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+
+
+                    final chatDocs = chatSnapshot.data.docs;
+                    return chatDocs.isNotEmpty?Flexible(
+                                        child: ListView.builder(
+                        scrollDirection: Axis.vertical,
+                        reverse: true,
+                        itemCount: chatDocs.length,
+                        itemBuilder: (ctx, index) =>
+                            MessageBuble(
+                              chatDocs[index]['text'],
+                              chatDocs[index]['userId'] == _chatBloc.hentUserId(),
+                              chatDocs[index]['likt'],
+                              chatDocs[index]['navnMelding'],
+                              chatDocs[index]['brukeNavn'],
+
+                            ),
+                      ),
+                    ):
+
+                    Container();
+                  });
+            }
+
+
           });
-      });
+      }
+    );
     }
+
+
 }

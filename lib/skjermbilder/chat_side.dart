@@ -26,7 +26,11 @@ class _ChatSideState extends State<ChatSide> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ChatsideBloc,ChatsideState>(
+    //return BlocListener<ChatsideBloc,ChatsideState>
+       // (listener:(context,state) {
+
+   //   },
+        return BlocBuilder<ChatsideBloc,ChatsideState>(
         builder: (context,state){
           return Scaffold(
             appBar: AppBar(
@@ -39,8 +43,8 @@ class _ChatSideState extends State<ChatSide> {
                     || state is SearchFieldOpen ||state is BrukerFinnesIkkeState) {
                   return Container(
                     color: Colors.lime[200],
-                    child: Center(
-                       child: Text('Søk etter noen og sende melding til',
+                    child: const Center(
+                       child: const Text('Søk etter noen og sende melding til..',
                        style: TextStyle(fontSize: 18.0),),
                     ),
                   );
@@ -49,8 +53,7 @@ class _ChatSideState extends State<ChatSide> {
                   return  SafeArea(
                     child: Column(
                       children: [
-
-                       Meldinger(),
+                        Meldinger(),
 
                         Container(
                           alignment: Alignment.bottomCenter,
@@ -72,10 +75,30 @@ class _ChatSideState extends State<ChatSide> {
                   )
                 );
                 }
+                if (state is HarKlikket) {
+                  return SafeArea(
+                    child: Column(
+                      children: [
+                        Meldinger(),
+
+                        Container(
+                            alignment: Alignment.bottomCenter,
+                            child: NyMelding(state.mottakersNavn)),
+                      ],
+                    ),
+                  );
+                }
+
+
+
+                return Container();
               },
+
            )
         );
-      }
-    );
-  }
+
+
+
+  });
+}
 }

@@ -22,5 +22,22 @@ class SendMelding extends ChatsideEvent{
   String get melding => _melding;
   String get motakersNavn => _motakersNavn;
 }
+class HentdMeldinger extends ChatsideEvent{
+  final String _mottakersNavn;
+
+  HentdMeldinger(this._mottakersNavn);
+
+  String get mottakersNavn => _mottakersNavn;
+}
+class KlikkerLikeKnapp extends ChatsideEvent{
+  final String _meldingNavn;
+  final String _sendersNavn;
+
+  KlikkerLikeKnapp(this._meldingNavn,this._sendersNavn);
+
+  String get meldingNavn => _meldingNavn;
+  String get sendersNavn => _sendersNavn;
+}
+
 
 

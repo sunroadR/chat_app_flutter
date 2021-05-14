@@ -39,7 +39,9 @@ class _SearchAppBarState extends State<SearchAppBar> {
             return  Scaffold.of(context).showSnackBar(
               SnackBar(
                 backgroundColor: Colors.amber,
-                content: Text('Brukernavnet finnes ikke'),
+                content: Text('Brukernavnet finnes ikke',style: TextStyle(
+                  color: Colors.black, fontSize: 20
+                ),),
               ),
             );
           }
@@ -49,7 +51,8 @@ class _SearchAppBarState extends State<SearchAppBar> {
             builder: (context, state) {
               return  LayoutBuilder(
                   builder: (context, constraints) {
-                    if (state is ChatsideInitialState ||state is BrukerFinnesIkkeState){
+                    if (state is ChatsideInitialState ||state is BrukerFinnesIkkeState
+                    || state is HarKlikket){
                       return  Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -98,7 +101,7 @@ class _SearchAppBarState extends State<SearchAppBar> {
                         );
                       }
 
-                      if (state is SearchFieldOpen|| state is SnakkeMedState) {
+                      if (state is SearchFieldOpen|| state is SnakkeMedState||state is HarKlikket) {
                         return Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
@@ -146,9 +149,34 @@ class _SearchAppBarState extends State<SearchAppBar> {
                           ],
                         );
                       }
+                    if(state is HarKlikket){
+                      return  Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          AppNavn(state.mottakersNavn),
+                          Container(
+                            width: 30,
+                            child: Align(
+                              alignment: Alignment.centerRight,
+                              child: IconButton(
+                                icon: Icon(Icons.search),
+                                onPressed: (() {
+                                  if (state is ChatsideInitialState||state is BrukerFinnesIkkeState
+                                      || state is SnakkeMedState|| state is MeldingSendtState) {
+                                    _startsideBloc.add(OpenForSearch());
+                                  }
+                                }),
+                              ),
+                            ),
+                          ),
+                        ],
+                      );
+                    }
                     }
                   );
+
             }
+
         )
       );
     }

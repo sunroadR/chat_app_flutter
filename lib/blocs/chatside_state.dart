@@ -26,4 +26,13 @@ class MeldingSendtState extends ChatsideState{
   String get mottakersNavn => _mottakersNavn;
   String get melding => _melding;
 }
+class HarKlikket extends ChatsideState{
+  final String _SenderNavn;
+
+  HarKlikket(this._SenderNavn);
+
+  String get mottakersNavn => _SenderNavn;
+}
+
+
 
